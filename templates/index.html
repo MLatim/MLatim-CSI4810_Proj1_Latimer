@@ -50,7 +50,13 @@
     </style>
 </head>
 <body>
+    <div class="text">
+                The dataset used comes from: https://www.kaggle.com/competitions/forest-cover-type-prediction
+            </div>
 
+    <div class="text">
+        Random Forest Classifier was used to train the model with 200 estimators.
+    </div>
     <h1>Forest Cover Type Prediction Results</h1>
 
     <div class="metric"><strong>Cross-Validation Accuracy:</strong> {{ results['cv_mean'] | round(4) }} ± {{ results['cv_std'] | round(4) }}</div>
@@ -92,6 +98,7 @@
             <img src="{{ url_for('static', filename='wilderness_distributions.png') }}" alt="Wilderness Distribution">
             <img src="{{ url_for('static', filename='soil_distributions.png') }}" alt="Soil Distribution">
         </div>
+
         <div class="chart">
             <div class="text">
                 The distribution for soil types is even throughout.
@@ -99,6 +106,38 @@
             <h2>Distribution of Forest Covers</h2>
             <img src="{{ url_for('static', filename='forest_cover_types.png') }}" alt="Distribution of Forest Covers">
         </div>
+
+        <div class="chart">
+            <div class="text">
+                Here we can see the relationship between the Forest Cover type and some key continuous features. Note the peaks within the data by elevation.
+            </div>
+            <h2>Continuous Features by Forest Type</h2>
+            <img src="{{ url_for('static', filename='KDE.png') }}" alt="Continuous Features by Forest Type">
+        </div>
+
+        <div class="chart">
+            <div class="text">
+                This shows us the correlation between the features via a heatmap.
+            </div>
+            <h2>Correlation Heatmap</h2>
+            <img src="{{ url_for('static', filename='corr_heatmap.png') }}" alt="Correlation Heatmap">
+        </div>
+
+        <div class="chart">
+            <div class="text">
+                Here we can see the results from training via the confusion matrix.
+            </div>
+            <h2>Confusion Matrix</h2>
+            <img src="{{ url_for('static', filename='confusion_matrix.png') }}" alt="Confusion Matrix">
+        </div>    
+
+        <div class="chart">
+            <div class="text">
+                These were the Top 20 features Random Forest deemed the most important.
+            </div>
+            <h2>Feature Importance</h2>
+            <img src="{{ url_for('static', filename='feature_importance.png') }}" alt="Feature Importance">
+        </div>   
     </div>
 
 </body>
