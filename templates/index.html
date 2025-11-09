@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Forest Cover Type Model Results</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(180deg, #e0f2f1, #b2dfdb);
+            color: #333;
+            text-align: center;
+            padding: 40px;
+        }
+        h1, h2 {
+            color: #004d40;
+        }
+        .metric {
+            font-size: 18px;
+            margin: 8px 0;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+        .chart {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        img {
+            max-width: 500px;
+            border-radius: 10px;
+        }
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px 12px;
+        }
+        th {
+            background-color: #004d40;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Forest Cover Type Prediction Results</h1>
+
+    <div class="metric"><strong>Cross-Validation Accuracy:</strong> {{ results['cv_mean'] | round(4) }} ± {{ results['cv_std'] | round(4) }}</div>
+    <div class="metric"><strong>Test Accuracy:</strong> {{ results['accuracy'] | round(4) }}</div>
+
+    <h2>Classification Report</h2>
+    <table>
+        <tr>
+            <th>Class</th>
+            <th>Precision</th>
+            <th>Recall</th>
+            <th>F1-score</th>
+        </tr>
+        {% for label, metrics in results['report'].items() if label.isdigit() %}
+        <tr>
+            <td>{{ label }}</td>
+            <td>{{ metrics['precision'] | round(2) }}</td>
+            <td>{{ metrics['recall'] | round(2) }}</td>
+            <td>{{ metrics['f1-score'] | round(2) }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+
+    <div class="container">
+        <div class="chart">
+            <div class="text">
+                This is the distribution for the continuous features of the data. There are 10 in total.
+            </div>
+            <h2>Continuous Feature Distributions</h2>
+            <img src="{{ url_for('static', filename='continuous_distributions.png') }}" alt="Continuous Feature Distributions">
+        </div>
+
+        <div class="chart">
+            <div class="text">
+                This is the distribution for the categorical features of the data. They show how much of the dataset appears in each wilderness area and the distribution of the soil types.
+            </div>
+            <h2>Categorical Feature Distribution</h2>
+            <img src="{{ url_for('static', filename='wilderness_distributions.png') }}" alt="Wilderness Distribution">
+            <img src="{{ url_for('static', filename='soil_distributions.png') }}" alt="Soil Distribution">
+        </div>
+        <div class="chart">
+            <div class="text">
+                The distribution for soil types is even throughout.
+            </div>
+            <h2>Distribution of Forest Covers</h2>
+            <img src="{{ url_for('static', filename='forest_cover_types.png') }}" alt="Distribution of Forest Covers">
+        </div>
+    </div>
+
+</body>
+</html>
